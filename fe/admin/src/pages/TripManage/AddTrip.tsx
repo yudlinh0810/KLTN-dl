@@ -185,7 +185,7 @@ const AddTrip = () => {
           <ul className={styles["form-group-list"]}>
             <li className={styles["form-group-item"]}>
               <label htmlFor="trip-name" className={styles.title}>
-                Tên Xe khách{" "}
+                Tên Xe chuyến
               </label>
               <input
                 id="trip-name"
@@ -194,6 +194,68 @@ const AddTrip = () => {
                 className={styles["form-control"]}
                 placeholder="Nhập tên chuyến xe..."
                 onChange={handleChangeValueForm}
+              />
+            </li>
+
+            <li className={styles["form-group-item"]}>
+              <label htmlFor="departure" className={styles.title}>
+                Địa điểm khởi hành{" "}
+              </label>
+              <InputDropDownListCD
+                idHTML="departure"
+                titleModal="địa điểm"
+                list={locationsData?.map((loc) => ({ id: loc.id, value: loc.name })) || []}
+                contentPlaceholder="Nhập điểm đi"
+                onSelected={handleSelectedDeparture}
+                funcAddItem={addLocation}
+                funcDelItem={deleteLocation}
+              />
+            </li>
+
+            <li className={styles["form-group-item"]}>
+              <label htmlFor="start-time" className={styles.title}>
+                Thời gian khởi hành{" "}
+              </label>
+              <input
+                ref={startTimeRef}
+                id="start-time"
+                type="datetime-local"
+                name="startTime"
+                className={styles["form-control"]}
+                value={form.startTime}
+                onChange={(e) => handleChangeValueForm(e)}
+                onClick={handleClickStartTime}
+              />
+            </li>
+            {/*  */}
+            <li className={styles["form-group-item"]}>
+              <label htmlFor="arrival" className={styles.title}>
+                Địa điểm kết thúc{" "}
+              </label>
+              <InputDropDownListCD
+                idHTML="arrival"
+                titleModal={"Địa điểm"}
+                list={locationsData?.map((loc) => ({ id: loc.id, value: loc.name })) || []}
+                contentPlaceholder="Nhập điểm kết thúc"
+                onSelected={handleSelectedArrival}
+                funcAddItem={addLocation}
+                funcDelItem={deleteLocation}
+              />
+            </li>
+
+            <li className={styles["form-group-item"]}>
+              <label htmlFor="end-time" className={styles.title}>
+                Thời gian kết thúc{" "}
+              </label>
+              <input
+                ref={endTimeRef}
+                id="end-time"
+                type="datetime-local"
+                name="endTime"
+                className={styles["form-control"]}
+                value={form.endTime}
+                onChange={(e) => handleChangeValueForm(e)}
+                onClick={handleClickEndTime}
               />
             </li>
 
@@ -254,68 +316,6 @@ const AddTrip = () => {
                 <SeatMapSleeper initialSeats={seats} onSelected={handleSelectedSeat} />
               </li>
             )}
-
-            <li className={styles["form-group-item"]}>
-              <label htmlFor="departure" className={styles.title}>
-                Địa điểm khởi hành{" "}
-              </label>
-              <InputDropDownListCD
-                idHTML="departure"
-                titleModal="địa điểm"
-                list={locationsData?.map((loc) => ({ id: loc.id, value: loc.name })) || []}
-                contentPlaceholder="Nhập điểm đi"
-                onSelected={handleSelectedDeparture}
-                funcAddItem={addLocation}
-                funcDelItem={deleteLocation}
-              />
-            </li>
-
-            <li className={styles["form-group-item"]}>
-              <label htmlFor="start-time" className={styles.title}>
-                Thời gian khởi hành{" "}
-              </label>
-              <input
-                ref={startTimeRef}
-                id="start-time"
-                type="datetime-local"
-                name="startTime"
-                className={styles["form-control"]}
-                value={form.startTime}
-                onChange={(e) => handleChangeValueForm(e)}
-                onClick={handleClickStartTime}
-              />
-            </li>
-            {/*  */}
-            <li className={styles["form-group-item"]}>
-              <label htmlFor="arrival" className={styles.title}>
-                Địa điểm đón{" "}
-              </label>
-              <InputDropDownListCD
-                idHTML="arrival"
-                titleModal={"Địa điểm"}
-                list={locationsData?.map((loc) => ({ id: loc.id, value: loc.name })) || []}
-                contentPlaceholder="Nhập điểm đón"
-                onSelected={handleSelectedArrival}
-                funcAddItem={addLocation}
-                funcDelItem={deleteLocation}
-              />
-            </li>
-
-            <li className={styles["form-group-item"]}>
-              <label htmlFor="end-time" className={styles.title}>
-                Thời gian kết thúc{" "}
-              </label>
-              <input
-                ref={endTimeRef}
-                id="end-time"
-                type="datetime-local"
-                name="endTime"
-                className={styles["form-control"]}
-                value={form.endTime}
-                onChange={(e) => handleChangeValueForm(e)}
-                onClick={handleClickEndTime}
-              />
-            </li>
 
             <li className={styles["form-group-item"]}>
               <label htmlFor="price" className={styles.title}>

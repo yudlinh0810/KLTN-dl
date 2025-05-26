@@ -144,7 +144,7 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className={styled["side-bar-mobile__menu-item"]}>
-                <NavLink to="/admin-manage" className={styled["side-bar-mobile__menu-link"]}>
+                <NavLink to="/co-driver-manage" className={styled["side-bar-mobile__menu-link"]}>
                   <RiAdminFill className={styled.icon} />
                   <span className={styled["side-bar-mobile__section-title"]}>
                     Quản lý Nhân viên

@@ -18,6 +18,7 @@
 .collapsed {
   @extend .side-bar;
   width: 5rem;
+  min-height: 100%;
 
   .side-bar__section-title {
     display: none;
@@ -90,4 +91,3 @@
     background-color: #fff1f0;
   }
 }
-

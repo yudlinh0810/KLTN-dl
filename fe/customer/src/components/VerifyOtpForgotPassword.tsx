@@ -3,7 +3,7 @@ import Header from "./Header";
 import { useLocation, useNavigate } from "react-router-dom";
 import OTPInput from "./OtpInput";
 import { toast } from "react-toastify";
-import { verifyOtpForgotPassword } from "../services/customer.service";
+import { sendOtp, verifyOtpForgotPassword } from "../services/customer.service";
 
 const VerifyOtpForgotPassword = () => {
   const location = useLocation();
@@ -21,6 +21,20 @@ const VerifyOtpForgotPassword = () => {
         return;
       } else {
         toast.error("Xác thực không chính xác");
+      }
+    } catch (error) {
+      console.log("err: ", error);
+    }
+  };
+
+  const handleSendOtp = async () => {
+    try {
+      const res = await sendOtp(email);
+
+      if (res && res.status === "OK") {
+        toast.success("Đã gửi lại mã, bạn hãy kiểm tra email!");
+      } else {
+        toast.error("Gửi mã thất bại!");
       }
     } catch (error) {
       console.log("err: ", error);
@@ -47,7 +61,9 @@ const VerifyOtpForgotPassword = () => {
           <OTPInput length={6} email={email} onsubmit={handleOTPVerify} />
           <div className={styles.footer}>
             <p>Không nhận được mã?</p>
-            <p className={styles.underline}>Nhấn vào đây để nhận.</p>
+            <p className={styles.underline} onClick={handleSendOtp}>
+              Nhấn vào đây để nhận.
+            </p>
           </div>
         </div>
       </div>

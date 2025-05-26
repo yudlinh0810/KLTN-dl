@@ -13,7 +13,7 @@ interface ItemType {
 
 interface Props {
   idHTML?: string;
-  titleModal:  string;
+  titleModal: string;
   list: ItemType[];
   contentPlaceholder?: string;
   valueIn?: string;
@@ -47,6 +47,14 @@ const InputDropDownListCD: React.FC<Props> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropDownListRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setValue(valueIn);
+  }, [valueIn]);
+
+  useEffect(() => {
+    setValueList(list);
+  }, [list]);
 
   const handleOnChange = (value: string) => {
     setIsDropDownVisible(true);
@@ -116,14 +124,6 @@ const InputDropDownListCD: React.FC<Props> = ({
       queryClient.invalidateQueries({ queryKey: ["locations"] });
     }
   };
-
-  useEffect(() => {
-    setValue(valueIn);
-  }, [valueIn]);
-
-  useEffect(() => {
-    setValueList(list);
-  }, [list]);
 
   return (
     <>

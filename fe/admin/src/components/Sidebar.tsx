@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
+import useSidebarModal from "../store/useSidebarModal";
 import styled from "../styles/sidebar.module.scss";
 import { Icon, IconType } from "./Icon";
-import useSidebarModal from "../store/useSidebarModal";
 
 const Sidebar = () => {
   const location = useLocation();
