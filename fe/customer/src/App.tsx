@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./styles/App.scss";
-import "./styles/Root.scss";
-import "./styles/Reset.scss";
+import "./styles/app.scss";
+import "./styles/root.scss";
+import "./styles/reset.scss";
 import HomePage from "./pages/HomePage";
 import Layout from "./layouts/Layout";
 import useClientWidth from "./utils/useClientWidth";
