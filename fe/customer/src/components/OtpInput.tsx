@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import styles from "../styles/otpInput.module.scss";
+import { toast } from "react-toastify";
 
 interface OTPInputProps {
   length: number;
@@ -34,6 +35,10 @@ const OTPInput: React.FC<OTPInputProps> = ({ length, email, onsubmit }) => {
   const handleVerify = () => {
     const otp = inputRefs.current.map((input) => input.value).join("");
     const data = { email, otp };
+    if (otp.length < 6) {
+      toast.warning("Vui lòng nhập đầy đủ mã OTP.");
+      return;
+    }
     onsubmit(data);
   };
 
