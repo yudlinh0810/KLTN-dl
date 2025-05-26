@@ -1,7 +1,6 @@
 @use "./mixin" as mix;
 .wrapper-layout {
   overflow-x: auto;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -16,7 +15,8 @@
 }
 
 .main {
-  flex: 1;
+  overflow: auto;
+  width: 100%;
 }
 
 .footer {

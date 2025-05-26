@@ -4,7 +4,9 @@ import Sidebar from "../components/Sidebar";
 const ManageLayout = () => {
   return (
     <div className={styles["manage-layout"]}>
-      <Sidebar />
+      <div className={styles["sidebar-wrapper"]}>
+        <Sidebar />
+      </div>
       <div className={styles.children}>
         <Outlet />
       </div>
