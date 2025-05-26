@@ -20,7 +20,7 @@ const VerifyOTP = () => {
 
       if (response.status === "OK") {
         const data = response.data;
-        setUser({ email: data.email, fullName: data.fullName });
+        setUser({ id: data.id, email: data.email, fullName: data.fullName });
         toast.success("Đăng ký thành công");
         navigate("/");
         return;
