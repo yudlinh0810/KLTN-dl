@@ -17,11 +17,11 @@ const Login = () => {
     event.preventDefault();
     const response = await login(form);
     console.log("res: ", response);
-    
+
     if (response.status === "OK") {
-      toast.success("Đăng nhập thành công");
       localStorage.setItem("accept", response.status);
       localStorage.setItem("expirationTime", response.expirationTime);
+      toast.success("Đăng nhập thành công");
       navigate("/");
     } else {
       toast.error("Đăng nhập thất bại");
@@ -36,47 +36,46 @@ const Login = () => {
     }));
   };
 
-  const handleClickShowPassword= () => {
-    setShowPassword(!showPassword)
-  }
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className={styled["login-container"]}>
-       <div className={styled.left}>
+      <div className={styled.left}>
         <h1 className={styled.brand}>VÉ XE TIỆN ÍCH</h1>
         <p className={styled.slogan}>Cùng bạn trên mọi nẻo đường</p>
         <div className={styled.busImage}>
-          <img src="https://cdn.futabus.vn/futa-busline-cms-dev/TVC_00aa29ba5b/TVC_00aa29ba5b.svg" alt="bus" />
+          <img
+            src="https://cdn.futabus.vn/futa-busline-cms-dev/TVC_00aa29ba5b/TVC_00aa29ba5b.svg"
+            alt="bus"
+          />
         </div>
       </div>
       <form onSubmit={handleLogin} className={styled.form}>
         <h2>Đăng nhập</h2>
         <div className={styled.inputGroup}>
           <div className={styled.email}>
-          <input
-            type="text"
-            placeholder="Nhập email"
-            id="email"
-            name="email"
-            value={form.email}
-            onChange={(e) => handleChangeValue(e)}
-          />
-        </div>
+            <input
+              type="text"
+              placeholder="Nhập email"
+              id="email"
+              name="email"
+              value={form.email}
+              onChange={(e) => handleChangeValue(e)}
+            />
+          </div>
           <div className={styled.password}>
-          <input
-            placeholder="Nhập mật khẩu"
-            type={showPassword ? "text" : "password"}
-            id="password"
-            name="password"
-            value={form.password}
-            onChange={(e) => handleChangeValue(e)}
-          />
-           <FaEyeSlash className={styled.iconShowPassword}
-            onClick={handleClickShowPassword}
-          />
-        </div>
-        
-        
+            <input
+              placeholder="Nhập mật khẩu"
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={form.password}
+              onChange={(e) => handleChangeValue(e)}
+            />
+            <FaEyeSlash className={styled.iconShowPassword} onClick={handleClickShowPassword} />
+          </div>
         </div>
         <div className="action">
           <button type="submit" className={styled.buttonSubmit} onClick={handleLogin}>

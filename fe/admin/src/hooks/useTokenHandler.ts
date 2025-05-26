@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { handleTokenExpiration } from "../utils/handleTokenExpiration ";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const useTokenHandler = () => {
@@ -7,15 +6,11 @@ const useTokenHandler = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const status = localStorage.getItem("status");
+    const expirationTime = localStorage.getItem("expirationTime");
 
-    if (status !== "OK" && location.pathname !== "/login") {
+    if (!expirationTime && location.pathname !== "/login") {
       navigate("/login");
       return;
-    }
-
-    if (status === "OK") {
-      handleTokenExpiration();
     }
   }, [location.pathname, navigate]);
 };
