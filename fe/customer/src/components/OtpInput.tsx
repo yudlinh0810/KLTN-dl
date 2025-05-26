@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import styles from "../styles/otpInput.module.scss";
-import { useLocation } from "react-router";
 
 interface OTPInputProps {
   length: number;
@@ -9,7 +8,6 @@ interface OTPInputProps {
 }
 
 const OTPInput: React.FC<OTPInputProps> = ({ length, email, onsubmit }) => {
-  const location = useLocation();
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {

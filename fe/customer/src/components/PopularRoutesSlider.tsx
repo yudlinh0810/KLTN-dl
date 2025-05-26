@@ -1,36 +1,56 @@
-import React from "react";
 import styles from "../styles/popularRoutesSlider.module.scss";
 
 const PopularRoutesSlider = () => {
   const routeData = [
-  {
-    city: 'Tp Hồ Chí Minh',
-    image: 'https://cdn.futabus.vn/futa-busline-cms-dev/Rectangle_23_2_8bf6ed1d78/Rectangle_23_2_8bf6ed1d78.png',
-    routes: [
-      { to: 'Đà Lạt', distance: '305km', time: '8 giờ', date: '16/05/2025', price: '290.000đ' },
-      { to: 'Cần Thơ', distance: '166km', time: '5 giờ', date: '16/05/2025', price: '165.000đ' },
-      { to: 'Long Xuyên', distance: '203km', time: '5 giờ', date: '16/05/2025', price: '190.000đ' },
-    ]
-  },
-{
-    city: 'Tp Hồ Chí Minh',
-    image: 'https://cdn.futabus.vn/futa-busline-cms-dev/Rectangle_23_3_2d8ce855bc/Rectangle_23_3_2d8ce855bc.png',
-    routes: [
-      { to: 'Đà Lạt', distance: '305km', time: '8 giờ', date: '16/05/2025', price: '290.000đ' },
-      { to: 'Cần Thơ', distance: '166km', time: '5 giờ', date: '16/05/2025', price: '165.000đ' },
-      { to: 'Long Xuyên', distance: '203km', time: '5 giờ', date: '16/05/2025', price: '190.000đ' },
-    ]
-  },
-  {
-    city: 'TP Đà Nẵng',
-    image: 'https://cdn.futabus.vn/futa-busline-cms-dev/Rectangle_23_4_061f4249f6/Rectangle_23_4_061f4249f6.png',
-    routes: [
-      { to: 'Đà Lạt', distance: '305km', time: '8 giờ', date: '16/05/2025', price: '290.000đ' },
-      { to: 'Cần Thơ', distance: '166km', time: '5 giờ', date: '16/05/2025', price: '165.000đ' },
-      { to: 'Long Xuyên', distance: '203km', time: '5 giờ', date: '16/05/2025', price: '190.000đ' },
-    ]
-  },
-];
+    {
+      city: "Tp Hồ Chí Minh",
+      image:
+        "https://cdn.futabus.vn/futa-busline-cms-dev/Rectangle_23_2_8bf6ed1d78/Rectangle_23_2_8bf6ed1d78.png",
+      routes: [
+        { to: "Đà Lạt", distance: "305km", time: "8 giờ", date: "16/05/2025", price: "290.000đ" },
+        { to: "Cần Thơ", distance: "166km", time: "5 giờ", date: "16/05/2025", price: "165.000đ" },
+        {
+          to: "Long Xuyên",
+          distance: "203km",
+          time: "5 giờ",
+          date: "16/05/2025",
+          price: "190.000đ",
+        },
+      ],
+    },
+    {
+      city: "Tp Hồ Chí Minh",
+      image:
+        "https://cdn.futabus.vn/futa-busline-cms-dev/Rectangle_23_3_2d8ce855bc/Rectangle_23_3_2d8ce855bc.png",
+      routes: [
+        { to: "Đà Lạt", distance: "305km", time: "8 giờ", date: "16/05/2025", price: "290.000đ" },
+        { to: "Cần Thơ", distance: "166km", time: "5 giờ", date: "16/05/2025", price: "165.000đ" },
+        {
+          to: "Long Xuyên",
+          distance: "203km",
+          time: "5 giờ",
+          date: "16/05/2025",
+          price: "190.000đ",
+        },
+      ],
+    },
+    {
+      city: "TP Đà Nẵng",
+      image:
+        "https://cdn.futabus.vn/futa-busline-cms-dev/Rectangle_23_4_061f4249f6/Rectangle_23_4_061f4249f6.png",
+      routes: [
+        { to: "Đà Lạt", distance: "305km", time: "8 giờ", date: "16/05/2025", price: "290.000đ" },
+        { to: "Cần Thơ", distance: "166km", time: "5 giờ", date: "16/05/2025", price: "165.000đ" },
+        {
+          to: "Long Xuyên",
+          distance: "203km",
+          time: "5 giờ",
+          date: "16/05/2025",
+          price: "190.000đ",
+        },
+      ],
+    },
+  ];
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>TUYẾN PHỔ BIẾN</h2>

@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { fetchUser } from "../../services/userServices.service";
 import { AxiosError } from "axios";
-import { User } from "../../types";
+import { User } from "../../types/user";
 
 export const fetchUserData = (token: string) => async (dispatch: Dispatch) => {
   dispatch({ type: "USER_LOADING" });
