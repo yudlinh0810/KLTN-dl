@@ -52,7 +52,10 @@ const DetailCoDriver = () => {
           {[
             { label: "email", value: coDriver?.email },
             { label: "họ và tên", value: coDriver?.fullName },
-            { label: "giới tính", value: coDriver?.sex },
+            {
+              label: "giới tính",
+              value: coDriver?.sex === "male" ? "Nam" : coDriver?.sex === "female" ? "Nữ" : "Khác",
+            },
             { label: "thành phố đang làm việc", value: coDriver?.location.name },
             { label: "số điện thoại", value: coDriver?.phone },
             {

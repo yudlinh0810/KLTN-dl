@@ -53,7 +53,10 @@ const DetailCustomer = () => {
           {[
             { label: "email", value: customer?.email },
             { label: "họ và tên", value: customer?.fullName },
-            { label: "giới tính", value: customer?.sex },
+            {
+              label: "giới tính",
+              value: customer?.sex === "male" ? "Nam" : customer?.sex === "female" ? "Nữ" : "Khác",
+            },
             { label: "số điện thoại", value: customer?.phone },
             {
               label: "ngày sinh",

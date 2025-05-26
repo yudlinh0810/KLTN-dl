@@ -189,7 +189,7 @@ const UpdateDriver = () => {
               {["male", "female", "other"].map((item, index) => {
                 return (
                   <option key={index} value={item}>
-                    {item}
+                    {item === "male" ? "Nam" : item === "female" ? "Nữ" : "Khác"}
                   </option>
                 );
               })}

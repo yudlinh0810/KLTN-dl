@@ -52,7 +52,10 @@ const DetailDriver = () => {
           {[
             { label: "email", value: driver?.email },
             { label: "họ và tên", value: driver?.fullName },
-            { label: "giới tính", value: driver?.sex },
+            {
+              label: "giới tính",
+              value: driver?.sex === "male" ? "Nam" : driver?.sex === "female" ? "Nữ" : "Khác",
+            },
             { label: "thành phố đang làm việc", value: driver?.location.name },
             { label: "số điện thoại", value: driver?.phone },
             {
