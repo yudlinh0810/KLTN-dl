@@ -9,6 +9,7 @@ import ImageListCUD, { ImageCUDType } from "../../components/ImageListCUD";
 import { useEffect, useState } from "react";
 import Image from "../../components/Image";
 import { useCustomNavMutation } from "../../hooks/useCustomQuery";
+import { toast } from "react-toastify";
 
 const UpdateBus = () => {
   const { licensePlate } = useParams();
@@ -60,6 +61,17 @@ const UpdateBus = () => {
   };
 
   const handleUpdateBus = async () => {
+    if (!bus) return;
+
+    const isFormChanged = form.capacity !== bus.capacity || form.type !== bus.type;
+
+    const isImagesChanged = images.length > 0;
+
+    if (!isFormChanged && !isImagesChanged) {
+      toast.warning("Bạn chưa thay đổi thông tin nào.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("data", JSON.stringify(form));
 

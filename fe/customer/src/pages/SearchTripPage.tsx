@@ -1,18 +1,18 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
-import SearchTrip from "../components/SearchTrip";
-import { useEffect, useState } from "react";
-import SortTrip from "../components/SortTrip";
-import { useQuery } from "@tanstack/react-query";
-import { ParamsSearchTrips, TripInfoBase } from "../types/trip";
-import { getLocations, searchTrips } from "../services/trip.service";
-import Loading from "../components/Loading";
-import styles from "../styles/searchTripPage.module.scss";
-import { formatDate } from "../utils/formatDate";
-import { formatCurrency } from "../utils/formatCurrency";
-import IconDeparture from "../components/IconDeparture";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import logo1 from "../assets/images/logo1.svg";
+import IconDeparture from "../components/IconDeparture";
+import Loading from "../components/Loading";
+import SearchTrip from "../components/SearchTrip";
+import SortTrip from "../components/SortTrip";
+import { getLocations, searchTrips } from "../services/trip.service";
+import styles from "../styles/searchTripPage.module.scss";
+import { ParamsSearchTrips, TripInfoBase } from "../types/trip";
+import { formatCurrency } from "../utils/formatCurrency";
+import { formatDate } from "../utils/formatDate";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -109,11 +109,7 @@ const SearchTripPage = () => {
   return (
     <div className={styles["search-trip-page-wrapper"]}>
       <div className={styles.banner}>
-      <img
-          className={styles["img-banner"]}
-          src={logo1}
-          alt="banner-wrapper"
-        />
+        <img className={styles["img-banner"]} src={logo1} alt="banner-wrapper" />
       </div>
       <div className={styles["search-trip-cpn-wrapper"]}>
         <SearchTrip valueSearchIn={searchParamsValue} />
@@ -184,7 +180,9 @@ const SearchTripPage = () => {
                             </div>
                           </div>
                           <div className={styles["info-trip__detail-and-actions"]}>
-                            <p>{`Còn ${t.totalSeatAvailable} chỗ trống`}</p>
+                            <p
+                              className={styles.strong}
+                            >{`Còn ${t.totalSeatAvailable} chỗ trống`}</p>
                             <button
                               type="button"
                               className={styles["btn-detail-trip"]}

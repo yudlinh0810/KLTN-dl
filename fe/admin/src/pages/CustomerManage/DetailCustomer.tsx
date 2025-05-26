@@ -1,11 +1,11 @@
 import styles from "../../styles/detailCD.module.scss";
 import { Link } from "react-router-dom";
-import { dateTimeTransform } from "../../utils/transform";
 import { fetchCustomer } from "../../services/customer.service";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import Loading from "../../components/Loading";
 import DefaultImage from "../../components/DefaultImage";
+import { dateTimeTransform } from "../../utils/transform";
 
 const DetailCustomer = () => {
   const { id } = useParams();
@@ -64,8 +64,8 @@ const DetailCustomer = () => {
             },
             { label: "Đăng ký bằng", value: customer?.provider },
             { label: "địa chỉ", value: customer?.address },
-            { label: "ngày tạo", value: dateTimeTransform(customer?.createAt, "DD-MM-YYYY") },
-            { label: "ngày cập nhật", value: dateTimeTransform(customer?.updateAt, "DD-MM-YYYY") },
+            { label: "ngày tạo", value: customer?.createAt },
+            { label: "ngày cập nhật", value: customer?.updateAt },
           ].map((item, index) => (
             <li key={index} className={styles.group}>
               <p className={styles.title}>{item.label}</p>

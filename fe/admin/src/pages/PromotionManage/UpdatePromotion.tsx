@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchPromotionById, updateInfoPromotion } from "../../services/promotion.service";
 import Loading from "../../components/Loading";
 import { useCustomNavMutation } from "../../hooks/useCustomQuery";
+import { toast } from "react-toastify";
 
 const UpdatePromotion = () => {
   const { id } = useParams<{ id: string }>();
@@ -43,8 +44,8 @@ const UpdatePromotion = () => {
     type: "",
     discountAmount: "",
     description: "",
-    startDate: "",
-    endDate: "",
+    startDate: new Date().toISOString().split("T")[0],
+    endDate: new Date().toISOString().split("T")[0],
   });
 
   const updateMutate = useCustomNavMutation(
@@ -61,7 +62,47 @@ const UpdatePromotion = () => {
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
   };
 
+  const handleClickInputDateStart = () => {
+    if (startRef.current) {
+      startRef.current.showPicker();
+    } else {
+      return;
+    }
+  };
+
+  const handleClickInputDateEnd = () => {
+    if (endRef.current) {
+      endRef.current.showPicker();
+    } else {
+      return;
+    }
+  };
+
+  const isFormChanged = () => {
+    if (!promotion) return false;
+
+    const keysToCheck = Object.keys(form).filter((key) => key !== "id");
+
+    return keysToCheck.some((key) => {
+      const formValue = form[key as keyof typeof form];
+      const originalValue = promotion[key as keyof typeof promotion];
+
+      // Nếu là ngày thì chỉ lấy phần "YYYY-MM-DD"
+      if (key === "startDate" || key === "endDate") {
+        const formDate = new Date(formValue!).toISOString().split("T")[0];
+        const originalDate = new Date(originalValue as string).toISOString().split("T")[0];
+        return formDate !== originalDate;
+      }
+
+      return formValue !== String(originalValue ?? "");
+    });
+  };
+
   const handleUpdatePromotion = async () => {
+    if (!isFormChanged()) {
+      return toast.warning("Bạn chưa thay đổi thông tin nào");
+    }
+
     const { id, ...data } = form;
     if (id) {
       await updateMutate.mutateAsync({ id: Number(id), data });
@@ -164,6 +205,7 @@ const UpdatePromotion = () => {
               className={styles.data}
               value={form.startDate}
               onChange={handleChangeValue}
+              onClick={handleClickInputDateStart}
             />
           </li>
           <li className={styles.item}>
@@ -175,6 +217,7 @@ const UpdatePromotion = () => {
               className={styles.data}
               value={form.endDate}
               onChange={handleChangeValue}
+              onClick={handleClickInputDateEnd}
             />
           </li>
           <div className={styles["feat-update"]}>

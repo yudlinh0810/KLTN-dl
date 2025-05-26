@@ -1,6 +1,5 @@
 import styles from "../../styles/updateCD.module.scss";
 import { Link } from "react-router-dom";
-import { dateTimeTransform } from "../../utils/transform";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -80,27 +79,6 @@ const UpdateCoDriver = () => {
     });
   };
 
-  const handleUpdateCoDriver = async () => {
-    const { id, ...data } = form;
-
-    if (!data.currentLocationId || !data.sex || !data.phone || !data.password) {
-      toast.error("Bạn điền thiếu dữ liệu!");
-      return;
-    }
-
-    const phoneRegex = /^(0[3|5|7|8|9])[0-9]{8}$/;
-    if (!phoneRegex.test(data.phone)) {
-      toast.error("Số điện thoại k đúng định dạng!");
-      return;
-    }
-
-    if (id) {
-      await updateMutate.mutateAsync({ id: Number(id), data });
-    } else {
-      return;
-    }
-  };
-
   const handleClickInputDate = () => {
     if (dateBirthRef.current) {
       dateBirthRef.current.showPicker();
@@ -112,6 +90,40 @@ const UpdateCoDriver = () => {
   const handleSelectedLocation = (selectedArrival: string) => {
     const getId = locationsData?.filter((lo) => lo.name === selectedArrival)[0].id;
     setForm((prev) => ({ ...prev, currentLocationId: Number(getId) }));
+  };
+
+  const handleUpdateCoDriver = async () => {
+    const { id, password, ...restForm } = form;
+
+    if (!restForm.currentLocationId || !restForm.sex || !restForm.phone) {
+      toast.error("Bạn điền thiếu dữ liệu!");
+      return;
+    }
+
+    const phoneRegex = /^(0[3|5|7|8|9])[0-9]{8}$/;
+    if (!phoneRegex.test(restForm.phone)) {
+      toast.error("Số điện thoại không đúng định dạng!");
+      return;
+    }
+
+    // So sánh các trường trừ password
+    const isSame =
+      restForm.fullName === (coDriverData?.fullName ?? "") &&
+      restForm.sex === (coDriverData?.sex ?? "") &&
+      restForm.phone === (coDriverData?.phone ?? "") &&
+      restForm.address === (coDriverData?.address ?? "") &&
+      restForm.dateBirth === (coDriverData?.dateBirth?.split("T")[0] ?? "") &&
+      restForm.email === (coDriverData?.email ?? "") &&
+      restForm.currentLocationId === (coDriverData?.location?.id ?? 0);
+
+    if (isSame) {
+      toast.warning("Bạn chưa thay đổi thông tin nào!");
+      return;
+    }
+
+    if (id) {
+      await updateMutate.mutateAsync({ id: Number(id), data: { ...restForm, password } });
+    }
   };
 
   if (isLoading) return <Loading />;
@@ -213,7 +225,7 @@ const UpdateCoDriver = () => {
                 name={item.name}
                 type={item.type}
                 className={styles.data}
-                value={form[item.name as keyof typeof form]}
+                value={form[item.name as keyof typeof form] ?? ""}
                 onChange={handleChangeValue}
               />
             </li>
@@ -235,21 +247,11 @@ const UpdateCoDriver = () => {
           {/* Trường chỉ đọc */}
           <li className={styles.item}>
             <p className={styles.title}>Ngày tạo</p>
-            <input
-              type="text"
-              className={styles.data}
-              value={dateTimeTransform(coDriverData.createAt, "DD-MM-YYYY")}
-              readOnly
-            />
+            <input type="text" className={styles.data} value={coDriverData.createAt} readOnly />
           </li>
           <li className={styles.item}>
             <p className={styles.title}>Ngày cập nhật</p>
-            <input
-              type="text"
-              className={styles.data}
-              value={dateTimeTransform(coDriverData.updateAt, "DD-MM-YYYY")}
-              readOnly
-            />
+            <input type="text" className={styles.data} value={coDriverData.updateAt} readOnly />
           </li>
 
           <div className={styles["feat-update"]}>

@@ -63,8 +63,8 @@ const DetailCoDriver = () => {
               value: dateTimeTransform(coDriver?.dateBirth, "DD-MM-YYYY", false),
             },
             { label: "địa chỉ", value: coDriver?.address },
-            { label: "ngày tạo", value: dateTimeTransform(coDriver?.createAt, "DD-MM-YYYY") },
-            { label: "ngày cập nhật", value: dateTimeTransform(coDriver?.updateAt, "DD-MM-YYYY") },
+            { label: "ngày tạo", value: coDriver?.createAt },
+            { label: "ngày cập nhật", value: coDriver?.updateAt },
           ].map((item, index) => (
             <li key={index} className={styles.group}>
               <p className={styles.title}>{item.label}</p>

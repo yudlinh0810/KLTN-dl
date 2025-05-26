@@ -8,6 +8,7 @@ import { fetchCustomer, updateInfoCustomer } from "../../services/customer.servi
 import Loading from "../../components/Loading";
 import DefaultImage from "../../components/DefaultImage";
 import { useCustomNavMutation } from "../../hooks/useCustomQuery";
+import { toast } from "react-toastify";
 
 const UpdateCustomer = () => {
   const { id } = useParams<{ id: string }>();
@@ -67,20 +68,39 @@ const UpdateCustomer = () => {
     });
   };
 
-  const handleUpdateCustomer = () => {
-    const { id, ...data } = form;
-    if (id) {
-      updateMutate.mutate({ id: Number(id), data });
-    } else {
-      return;
-    }
-  };
-
   const handleClickInputDate = () => {
     if (dateBirthRef.current) {
       dateBirthRef.current.showPicker();
     } else {
       return;
+    }
+  };
+
+  const handleUpdateCustomer = async () => {
+    const { id, password, ...restForm } = form;
+
+    const phoneRegex = /^(0[3|5|7|8|9])[0-9]{8}$/;
+    if (!phoneRegex.test(restForm.phone)) {
+      toast.error("Số điện thoại không đúng định dạng!");
+      return;
+    }
+
+    // So sánh các trường trừ password
+    const isSame =
+      restForm.fullName === (customer?.fullName ?? "") &&
+      restForm.sex === (customer?.sex ?? "") &&
+      restForm.phone === (customer?.phone ?? "") &&
+      restForm.address === (customer?.address ?? "") &&
+      restForm.dateBirth === (customer?.dateBirth?.split("T")[0] ?? "") &&
+      restForm.email === (customer?.email ?? "");
+
+    if (isSame) {
+      toast.warning("Bạn chưa thay đổi thông tin nào!");
+      return;
+    }
+
+    if (id) {
+      await updateMutate.mutateAsync({ id: Number(id), data: { ...restForm, password } });
     }
   };
 

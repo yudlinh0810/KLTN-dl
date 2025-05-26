@@ -13,8 +13,8 @@ const AddPromotion = () => {
     type: "",
     discountAmount: "",
     description: "",
-    startDate: "",
-    endDate: "",
+    startDate: new Date().toISOString().split("T")[0],
+    endDate: new Date().toISOString().split("T")[0],
   });
 
   const addMutate = useCustomNavMutation(
@@ -38,11 +38,11 @@ const AddPromotion = () => {
     addMutate.mutate(form);
   };
 
-  const handleClickDate = (ref: React.RefObject<HTMLInputElement> | null) => {
-    if(ref?.current){
+  const handleClickDate = (ref: React.RefObject<HTMLInputElement>) => {
+    if (ref?.current) {
       ref.current?.showPicker();
-    }else{
-      return
+    } else {
+      return;
     }
   };
 
@@ -125,14 +125,22 @@ const AddPromotion = () => {
           </li>
 
           {[
-            { label: "Ngày bắt đầu", name: "startDate", ref: startDateRef },
-            { label: "Ngày kết thúc", name: "endDate", ref: endDateRef },
+            {
+              label: "Ngày bắt đầu",
+              name: "startDate",
+              ref: startDateRef as React.RefObject<HTMLInputElement>,
+            },
+            {
+              label: "Ngày kết thúc",
+              name: "endDate",
+              ref: endDateRef as React.RefObject<HTMLInputElement>,
+            },
           ].map((item, index) => (
             <li key={index} className={styles["form-group-item"]}>
               <p className={styles.title}>{item.label}</p>
               <input
                 ref={item.ref}
-                onClick={() => handleClickDate(item.ref && null)}
+                onClick={() => handleClickDate(item.ref)}
                 name={item.name}
                 type="date"
                 className={styles["form-control"]}

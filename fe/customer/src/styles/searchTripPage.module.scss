@@ -7,14 +7,14 @@
     display: flex;
     align-items: center;
     position: absolute;
-      z-index: 10;
-      top: 135px;
+    z-index: 10;
+    top: 135px;
     .img-banner {
       object-fit: cover;
       border-radius: 20px;
       width: 1120px;
       height: 300px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .2);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.2);
     }
   }
   .search-trip-cpn-wrapper {
@@ -102,11 +102,19 @@
                 justify-content: space-between;
 
                 margin-bottom: 0.5rem;
+
+                &-price {
+                  color: #0973b9;
+                  font-size: 1.1rem;
+                  font-weight: 600;
+                }
               }
+
               &__detail {
                 display: flex;
                 margin-bottom: 0.5rem;
               }
+
               &__detail-ic-from-to {
                 display: flex;
                 flex-direction: column;
@@ -149,6 +157,12 @@
                 justify-content: space-between;
                 gap: 1rem;
                 align-items: end;
+
+                .strong {
+                  color: var(--danger-bd);
+                  font-weight: 600;
+                  font-size: 1.05rem;
+                }
 
                 .btn-detail-trip {
                   border: 1px solid var(--primary-bd);
