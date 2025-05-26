@@ -6,7 +6,7 @@ import promotion2 from "../assets/images/promotion2.jpg";
 import promotion3 from "../assets/images/promotion3.jpg";
 import promotion4 from "../assets/images/summer.jpg";
 import { useNavigate } from "react-router";
-import { Slider } from "antd";
+import Slider from "react-slick";
 
 const PromotionSlider = () => {
   const navigation = useNavigate();
