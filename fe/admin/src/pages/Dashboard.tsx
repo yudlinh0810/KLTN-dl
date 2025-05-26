@@ -42,7 +42,7 @@ const Dashboard = () => {
                 <p>{statsData?.totalDrivers}</p>
               </div>
               <div className={styles["content"]}>
-                <p className={styles.title}>Phụ xe </p>
+                <p className={styles.title}>Nhân viên </p>
                 <p>{statsData?.totalCoDrivers}</p>
               </div>
             </div>

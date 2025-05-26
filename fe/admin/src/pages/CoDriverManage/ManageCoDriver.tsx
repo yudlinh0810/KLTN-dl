@@ -79,7 +79,7 @@ const ManageCoDriver: React.FC = () => {
         </div>
 
         <Link to={"/co-driver-manage/add"} className={styles["btn-add"]}>
-          Thêm phụ xe
+          Thêm nhân viên
         </Link>
       </div>
       <div className={styles["table-wrapper"]}>

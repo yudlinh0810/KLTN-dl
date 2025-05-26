@@ -47,8 +47,8 @@ const UpdateCoDriver = () => {
   const updateMutate = useCustomNavMutation(
     updateInfoCoDriver,
     "/co-driver-manage",
-    "Cập nhật thông tin phụ xe thành công",
-    "Cập nhật thông tin phụ xe thất bại"
+    "Cập nhật thông tin nhân viên thành công",
+    "Cập nhật thông tin nhân viên thất bại"
   );
 
   useEffect(() => {

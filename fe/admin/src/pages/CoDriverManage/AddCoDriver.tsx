@@ -17,7 +17,7 @@ const AddCoDriver = () => {
   const [statePassword, setStatePassword] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [form, setForm] = useState({
-    currentLocationId:0,
+    currentLocationId: 0,
     fullName: "",
     phone: "",
     address: "",
@@ -60,28 +60,27 @@ const AddCoDriver = () => {
   const handleAddCoDriver = async () => {
     const formData = new FormData();
 
-    if(!form.email || !form.phone || !form.password || !form.currentLocationId) {
-      toast.error("Bạn điền thiếu thông tin")
-    return
+    if (!form.email || !form.phone || !form.password || !form.currentLocationId) {
+      toast.error("Bạn điền thiếu thông tin");
+      return;
     }
-    
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(emailRegex.test(form?.email) === false) {
-      toast.error("Email không đúng định dạng")
-      return
+    if (emailRegex.test(form?.email) === false) {
+      toast.error("Email không đúng định dạng");
+      return;
     }
 
     const phoneRegex = /^(0[3|5|7|8|9])[0-9]{8}$/;
-      if(!phoneRegex.test(form.phone)){
-        toast.error("Số điện thoại k đúng định dạng!")
-        return
-      }
-
+    if (!phoneRegex.test(form.phone)) {
+      toast.error("Số điện thoại k đúng định dạng!");
+      return;
+    }
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    if(passwordRegex.test(form?.password) === false) {
-      toast.error("Mật khẩu ít nhất phải 1 kí tự thường, hoa, đặc biệt và tối thiếu 8 kí tự")
-      return
+    if (passwordRegex.test(form?.password) === false) {
+      toast.error("Mật khẩu ít nhất phải 1 kí tự thường, hoa, đặc biệt và tối thiếu 8 kí tự");
+      return;
     }
 
     formData.append("data", JSON.stringify(form));
@@ -124,7 +123,7 @@ const AddCoDriver = () => {
         className={styles.form}
       >
         <div className={styles.title}>
-          <h2 className={styles["content-title"]}>Thêm mới phụ xe</h2>
+          <h2 className={styles["content-title"]}>Thêm mới nhân viên</h2>
         </div>
         <ul className={styles["form-group-list"]}>
           <li className={styles["form-group-item"]}>
