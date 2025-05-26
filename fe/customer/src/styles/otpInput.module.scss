@@ -1,0 +1,52 @@
+@use "./mixin" as mix;
+
+.otp-input-container {
+  margin: 20px 0;
+  display: grid;
+  place-items: center;
+   .otp-inputs {
+    input {
+      text-align: center;
+      width: 40px;
+      margin: 0 8px;
+      border-radius: 5px;
+      height: 40px;
+      border: 1px solid gray;
+      
+      &:focus {
+        border-color: #2eb4fc;
+        outline: none;
+      }
+    }
+   }
+   .otp-btn {
+    margin-top: 15px;
+    background-color: #2eb4fc;
+   }
+}
+//  .otp-input {
+//       width: 40px;
+//       height: 40px;
+//       text-align: center;
+//       font-size: 18px;
+//       padding: 6px;
+//       border: 1px solid #ccc;
+//       border-radius: 4px;
+
+//       &:focus {
+//         border-color: #007bff;
+//         outline: none;
+//       }
+//     }
+//   }
+//   .otp-btn {
+//     background-color: #2eb4fc;
+//     color: black;
+//     padding: 10px 45px;
+//     border: 1px solid transparent;
+//     border-radius: 8px;
+//     letter-spacing: 0.5px;
+//     text-transform: uppercase;
+//     margin-top: 10px;
+//     cursor: pointer;
+//   }

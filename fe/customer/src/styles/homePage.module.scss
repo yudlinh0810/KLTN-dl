@@ -1,0 +1,57 @@
+@use "./mixin" as mix;
+
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+  .connection {
+    width: 1200px;
+  }
+  .banner-wrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+      z-index: 10;
+      top: 135px;
+    .img-banner {
+      object-fit: cover;
+      border-radius: 20px;
+      width: 1120px;
+      height: 300px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .2);
+    }
+
+    @include mix.responsive(tablet) {
+      display: block;
+    }
+
+    @include mix.responsive(mobile) {
+      display: none;
+    }
+  }
+
+  .quality {
+    width: 100%;
+    background-color: #fff;
+    margin: 0 auto;
+  }
+  .search-trip-mobile {
+    display: none !important;
+
+    @include mix.responsive(mobile) {
+      display: block !important;
+    }
+  }
+
+  .search-trip {
+    background-image: url("https://static.vexere.com/production/banners/1209/leaderboard_1440x480.jpg");
+  }
+}

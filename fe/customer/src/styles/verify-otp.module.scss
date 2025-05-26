@@ -1,0 +1,53 @@
+@use "./mixin" as mix;
+
+.verify-otp-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 600px;
+  height: 500px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  .footer {
+    margin-left: 160px;
+
+    .underline {
+      color: red;
+      cursor: pointer;
+    }
+  }
+
+  .img {
+    display: flex;
+    img {
+      margin-right: 15px;
+    width: 50px;
+  }
+    h3 {
+      font-weight: 500;
+      margin-left: 8px;
+    }
+    p {
+    }
+  }
+  .verify-otp {
+    height: min(70vh, 29.25rem);
+    width: min(50vh, 19.75rem);
+    padding: 2rem;
+    border: 2px solid #72b1f4;
+    border-radius: 0.8rem;
+    background: #fff;
+
+    @include mix.responsive(tablet) {
+      width: 60%;
+      height: 40%;
+    }
+
+    @include mix.responsive(mobile) {
+      width: 85%;
+      height: 70%;
+    }
+  }
+}
