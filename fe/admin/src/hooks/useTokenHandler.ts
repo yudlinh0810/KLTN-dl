@@ -6,9 +6,9 @@ const useTokenHandler = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const expirationTime = localStorage.getItem("expirationTime");
+    const accept = localStorage.getItem("accept");
 
-    if (!expirationTime && location.pathname !== "/login") {
+    if (accept !== "OK" && location.pathname !== "/login") {
       navigate("/login");
       return;
     }
