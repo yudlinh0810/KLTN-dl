@@ -15,7 +15,7 @@ const UpdateBus = () => {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["bus", licensePlate],
-    queryFn: () => getDetailBus(licensePlate || ''),
+    queryFn: () => getDetailBus(licensePlate || ""),
     staleTime: 5 * 60 * 1000,
   });
 
@@ -36,6 +36,20 @@ const UpdateBus = () => {
     "Cập nhật xe thành công",
     "Cập nhật xe thất bại"
   );
+
+  useEffect(() => {
+    if (bus) {
+      setForm({
+        id: bus.id,
+        licensePlate: bus.licensePlate,
+        capacity: bus.capacity,
+        type: bus.type,
+        indexIsMain: "",
+      });
+    }
+  }, [bus]);
+
+  useEffect(() => {}, [images]);
 
   const imgsLength = bus?.images?.length ?? 0;
   // const imageList = bus?.images ?? null;
@@ -60,20 +74,6 @@ const UpdateBus = () => {
 
     mutateUpdate.mutate(formData);
   };
-
-  useEffect(() => {
-    if (bus) {
-      setForm({
-        id: bus.id,
-        licensePlate: bus.licensePlate,
-        capacity: bus.capacity,
-        type: bus.type,
-        indexIsMain: "",
-      });
-    }
-  }, [bus]);
-
-  useEffect(() => {}, [images]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;

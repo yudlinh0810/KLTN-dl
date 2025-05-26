@@ -5,7 +5,6 @@ import { fetchCoDriver } from "../../services/coDriver.service";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import Loading from "../../components/Loading";
-import { useEffect } from "react";
 import DefaultImage from "../../components/DefaultImage";
 
 const DetailCoDriver = () => {
@@ -19,8 +18,6 @@ const DetailCoDriver = () => {
   });
 
   const coDriver = data ?? null;
-
-  useEffect(() => {}, [coDriver]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;

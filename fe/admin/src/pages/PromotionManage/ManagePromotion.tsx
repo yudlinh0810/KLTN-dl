@@ -29,11 +29,6 @@ const PromotionManage: React.FC = () => {
 
   const urlMain = "/promotion-manage";
 
-  useEffect(() => {
-    const pageNum = page ? Math.max(1, parseInt(page, 10)) - 1 : 0;
-    setCurrentPage(pageNum);
-  }, [location.pathname]);
-
   const { data, isLoading, error } = useQuery({
     queryKey: [
       "promotionList",
@@ -55,6 +50,15 @@ const PromotionManage: React.FC = () => {
     staleTime: 5 * 60 * 1000,
     placeholderData: (previousData) => previousData,
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [data]);
+
+  useEffect(() => {
+    const pageNum = page ? Math.max(1, parseInt(page, 10)) - 1 : 0;
+    setCurrentPage(pageNum);
+  }, [location.pathname]);
 
   const total = data?.total ?? 0;
   const promotions = data?.data || [];
@@ -87,10 +91,6 @@ const PromotionManage: React.FC = () => {
   const handleRedirectDetail = (id: number) => {
     navigate(`${urlMain}/detail/${id}`);
   };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [data]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;
@@ -161,7 +161,7 @@ const PromotionManage: React.FC = () => {
           <tbody>
             {promotions.map((promo, index) => (
               <tr key={promo.id}>
-                <td onClick={() => handleRedirectDetail(promo.id)}>
+                <td onClick={() => handleRedirectDetail(promo?.id || 0)}>
                   {index + 1 + currentPage * ITEMS_PER_PAGE}
                 </td>
                 <td>{promo.code}</td>

@@ -13,15 +13,6 @@ const UpdateCustomer = () => {
   const { id } = useParams<{ id: string }>();
   const idFetch = id ?? "0";
   const dateBirthRef = useRef<HTMLInputElement>(null);
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["customer", idFetch],
-    queryFn: () => fetchCustomer(idFetch),
-    staleTime: 5 * 60 * 1000,
-  });
-
-  const customer = data ?? null;
-
   const [form, setForm] = useState({
     id: id,
     fullName: "",
@@ -33,12 +24,35 @@ const UpdateCustomer = () => {
     email: "",
   });
 
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["customer", idFetch],
+    queryFn: () => fetchCustomer(idFetch),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const customer = data ?? null;
+
   const updateMutate = useCustomNavMutation(
     updateInfoCustomer,
     "/customer-manage",
     "Cập nhật thông tin khách hàng thành công",
     "Cập nhật thông tin khách hàng thất bại"
   );
+
+  useEffect(() => {
+    if (customer) {
+      setForm({
+        id: id,
+        fullName: customer.fullName ?? "",
+        password: "",
+        sex: customer.sex ?? "",
+        phone: customer.phone ?? "",
+        address: customer.address ?? "",
+        dateBirth: customer.dateBirth?.split("T")[0] ?? "",
+        email: customer.email ?? "",
+      });
+    }
+  }, [customer]);
 
   const handleChangeValue = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -69,21 +83,6 @@ const UpdateCustomer = () => {
       return;
     }
   };
-
-  useEffect(() => {
-    if (customer) {
-      setForm({
-        id: id,
-        fullName: customer.fullName ?? "",
-        password: "",
-        sex: customer.sex ?? "",
-        phone: customer.phone ?? "",
-        address: customer.address ?? "",
-        dateBirth: customer.dateBirth?.split("T")[0] ?? "",
-        email: customer.email ?? "",
-      });
-    }
-  }, [customer]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;

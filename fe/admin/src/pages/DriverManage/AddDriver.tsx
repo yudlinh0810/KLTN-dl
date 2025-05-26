@@ -17,13 +17,6 @@ const AddDriver = () => {
   const experienceYearRef = useRef<HTMLInputElement>(null);
   const [statePassword, setStatePassword] = useState(false);
   const [image, setImage] = useState<File | null>(null);
-
-  const { data: locationsData, isLoading: isLocationLoading } = useQuery({
-    queryKey: ["locations"],
-    queryFn: () => getAllLocation(),
-    staleTime: 5 * 60 * 1000,
-  });
-
   const [form, setForm] = useState({
     fullName: "",
     phone: "",
@@ -35,6 +28,12 @@ const AddDriver = () => {
     experienceYears: new Date().toISOString().split("T")[0],
     licenseNumber: "",
     currentLocationId: 0,
+  });
+
+  const { data: locationsData, isLoading: isLocationLoading } = useQuery({
+    queryKey: ["locations"],
+    queryFn: () => getAllLocation(),
+    staleTime: 5 * 60 * 1000,
   });
 
   const addMutate = useCustomNavMutation(
@@ -62,23 +61,28 @@ const AddDriver = () => {
   };
 
   const handleAddDriver = async () => {
+    if (
+      !form.email ||
+      !form.phone ||
+      !form.password ||
+      !form.currentLocationId ||
+      !form.licenseNumber
+    ) {
+      toast.error("Bạn điền thiếu thông tin");
+      return;
+    }
 
-    if(!form.email || !form.phone || !form.password || !form.currentLocationId || !form.licenseNumber) {
-          toast.error("Bạn điền thiếu thông tin")
-          return
-        }
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(emailRegex.test(form?.email) === false) {
-          toast.error("Email không đúng định dạng")
-          return
-        }
-    
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-        if(passwordRegex.test(form?.password) === false) {
-          toast.error("Mật khẩu ít nhất phải 1 kí tự thường, hoa, đặc biệt và tối thiếu 8 kí tự")
-          return
-        }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(form?.email) === false) {
+      toast.error("Email không đúng định dạng");
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (passwordRegex.test(form?.password) === false) {
+      toast.error("Mật khẩu ít nhất phải 1 kí tự thường, hoa, đặc biệt và tối thiếu 8 kí tự");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(form));

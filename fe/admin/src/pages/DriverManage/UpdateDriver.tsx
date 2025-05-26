@@ -21,6 +21,20 @@ const UpdateDriver = () => {
   const experienceYearRef = useRef<HTMLInputElement>(null);
   const [statePassword, setStatePassword] = useState(false);
 
+  const [form, setForm] = useState({
+    id: id,
+    fullName: "",
+    phone: "",
+    address: "",
+    dateBirth: "",
+    email: "",
+    sex: "",
+    password: "",
+    experienceYears: "",
+    licenseNumber: "",
+    currentLocationId: 0,
+  });
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["driver", idFetch],
     queryFn: () => fetchDriver(idFetch),
@@ -35,19 +49,23 @@ const UpdateDriver = () => {
 
   const driver = data ?? null;
 
-  const [form, setForm] = useState({
-    id: id,
-    fullName: "",
-    phone: "",
-    address: "",
-    dateBirth: "",
-    email: "",
-    sex: "",
-    password: "",
-    experienceYears: "",
-    licenseNumber: "",
-    currentLocationId: 0,
-  });
+  useEffect(() => {
+    if (driver) {
+      setForm({
+        id: id,
+        fullName: driver?.fullName ?? "",
+        password: "",
+        sex: driver?.sex ?? "",
+        licenseNumber: driver?.licenseNumber ?? "",
+        experienceYears: driver?.experienceYears?.split("T")[0] ?? "",
+        phone: driver?.phone ?? "",
+        address: driver?.address ?? "",
+        dateBirth: driver?.dateBirth?.split("T")[0] ?? "",
+        email: driver?.email ?? "",
+        currentLocationId: driver?.currentLocationId || 0,
+      });
+    }
+  }, [driver]);
 
   const updateMutate = useCustomNavMutation(
     updateInfoDriver,
@@ -73,9 +91,9 @@ const UpdateDriver = () => {
     const { id, ...data } = form;
 
     const phoneRegex = /^(0[3|5|7|8|9])[0-9]{8}$/;
-    if(!phoneRegex.test(data.phone)){
-      toast.error("Số điện thoại k đúng định dạng!")
-      return
+    if (!phoneRegex.test(data.phone)) {
+      toast.error("Số điện thoại k đúng định dạng!");
+      return;
     }
 
     if (id) {
@@ -109,24 +127,6 @@ const UpdateDriver = () => {
     const getId = locationsData?.filter((lo) => lo.name === selectedArrival)[0].id;
     setForm((prev) => ({ ...prev, currentLocationId: Number(getId) }));
   };
-
-  useEffect(() => {
-    if (driver) {
-      setForm({
-        id: id,
-        fullName: driver?.fullName ?? "",
-        password: "",
-        sex: driver?.sex ?? "",
-        licenseNumber: driver?.licenseNumber ?? "",
-        experienceYears: driver?.experienceYears?.split("T")[0] ?? "",
-        phone: driver?.phone ?? "",
-        address: driver?.address ?? "",
-        dateBirth: driver?.dateBirth?.split("T")[0] ?? "",
-        email: driver?.email ?? "",
-        currentLocationId: driver?.currentLocationId || 0,
-      });
-    }
-  }, [driver]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;

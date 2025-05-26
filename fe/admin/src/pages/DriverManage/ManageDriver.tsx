@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { GoTriangleDown } from "react-icons/go";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -10,11 +10,9 @@ import DefaultImage from "../../components/DefaultImage";
 import { dateTimeTransform } from "../../utils/transform";
 import { getDriverList } from "../../services/driver.service";
 
-
 const ITEMS_PER_PAGE = 10;
 
 const ManageDriver: React.FC = () => {
-  const queryClient = useQueryClient()
   const navigate = useNavigate();
   const { page } = useParams<{ page?: string }>();
   const location = useLocation();
@@ -25,10 +23,6 @@ const ManageDriver: React.FC = () => {
   const urlMain = "/driver-manage";
 
   // Khi URL thay đổi, cập nhật currentPage
-  useEffect(() => {
-    const pageNum = page ? Math.max(1, parseInt(page, 10)) - 1 : 0;
-    setCurrentPage(pageNum);
-  }, [location.pathname]);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["driverList", currentPage, arrangeType],
@@ -41,6 +35,15 @@ const ManageDriver: React.FC = () => {
     staleTime: 5 * 60 * 1000,
     placeholderData: (previousData) => previousData,
   });
+
+  useEffect(() => {
+    const pageNum = page ? Math.max(1, parseInt(page, 10)) - 1 : 0;
+    setCurrentPage(pageNum);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll lên đầu khi chuyển trang
+  }, [data]);
 
   const total = data?.total ?? 0;
   const driverData = data?.data || [];
@@ -60,14 +63,8 @@ const ManageDriver: React.FC = () => {
     navigate(`${urlMain}/detail/${id}`);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scroll lên đầu khi chuyển trang
-  }, [data]);
-
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;
-
-  
 
   return (
     <div className={styles.container}>
@@ -140,7 +137,6 @@ const ManageDriver: React.FC = () => {
                     >
                       Cập nhật
                     </Link>
-                   
                   </div>
                 </td>
               </tr>
@@ -156,7 +152,6 @@ const ManageDriver: React.FC = () => {
           currentPage={currentPage}
         />
       </div>
-      
     </div>
   );
 };

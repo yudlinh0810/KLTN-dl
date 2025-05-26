@@ -20,7 +20,7 @@ const ImageListCUD: React.FC<ImageListCUDProps> = ({ images, setImages }) => {
   // const [images, setImages] = useState<ImageType[]>([]);
 
   const handleAddImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length > 5) {
+    if (e.target.files && e.target.files.length + images.length > 5) {
       toast.warning("Chỉ được chọn tối đa 5 ảnh");
       return;
     }

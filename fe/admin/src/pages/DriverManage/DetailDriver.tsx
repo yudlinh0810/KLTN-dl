@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import Loading from "../../components/Loading";
-import { useEffect } from "react";
 import DefaultImage from "../../components/DefaultImage";
 import { fetchDriver } from "../../services/driver.service";
 
@@ -18,8 +17,6 @@ const DetailDriver = () => {
   });
 
   const driver = data ?? null;
-
-  useEffect(() => {}, [driver]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;
@@ -60,16 +57,16 @@ const DetailDriver = () => {
             { label: "số điện thoại", value: driver?.phone },
             {
               label: "ngày sinh",
-              value: driver?.dateBirth.split("T")[0],
+              value: driver?.dateBirth?.split("T")[0],
             },
             { label: "Mã giấy phép lái xe", value: driver?.licenseNumber },
             {
               label: "Ngày cấp",
-              value: driver?.experienceYears.split("T")[0],
+              value: driver?.experienceYears?.split("T")[0],
             },
             { label: "địa chỉ", value: driver?.address },
-            { label: "ngày tạo", value: driver?.createAt.split(" ")[1] },
-            { label: "ngày cập nhật", value: driver?.updateAt.split(" ")[1] },
+            { label: "ngày tạo", value: driver?.createAt?.split(" ")[1] },
+            { label: "ngày cập nhật", value: driver?.updateAt?.split(" ")[1] },
           ].map((item, index) => (
             <li key={index} className={styles.group}>
               <p className={styles.title}>{item.label}</p>

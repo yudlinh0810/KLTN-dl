@@ -21,6 +21,21 @@ const UpdatePromotion = () => {
 
   const promotion = data ?? null;
 
+  useEffect(() => {
+    if (promotion) {
+      setForm({
+        id: id,
+        code: promotion.code ?? "",
+        carType: promotion.carType ?? "",
+        type: promotion.type ?? "",
+        discountAmount: promotion.discountAmount.toString() ?? "",
+        description: promotion.description ?? "",
+        startDate: promotion.startDate?.split("T")[0] ?? "",
+        endDate: promotion.endDate?.split("T")[0] ?? "",
+      });
+    }
+  }, [promotion]);
+
   const [form, setForm] = useState({
     id: id,
     code: "",
@@ -52,21 +67,6 @@ const UpdatePromotion = () => {
       await updateMutate.mutateAsync({ id: Number(id), data });
     }
   };
-
-  useEffect(() => {
-    if (promotion) {
-      setForm({
-        id: id,
-        code: promotion.code ?? "",
-        carType: promotion.carType ?? "",
-        type: promotion.type ?? "",
-        discountAmount: promotion.discountAmount.toString() ?? "",
-        description: promotion.description ?? "",
-        startDate: promotion.startDate?.split("T")[0] ?? "",
-        endDate: promotion.endDate?.split("T")[0] ?? "",
-      });
-    }
-  }, [promotion]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;

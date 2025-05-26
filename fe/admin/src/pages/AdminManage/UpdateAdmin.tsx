@@ -11,6 +11,11 @@ import { fetchAdmin, updateInfoAdmin } from "../../services/admin.service";
 const UpdateAdmin = () => {
   const { id } = useParams<{ id: string }>();
   const idFetch = id ?? "0";
+  const [form, setForm] = useState({
+    id: id,
+    password: "",
+    email: "",
+  });
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin", idFetch],
@@ -20,11 +25,15 @@ const UpdateAdmin = () => {
 
   const admin = data ?? null;
 
-  const [form, setForm] = useState({
-    id: id,
-    password: "",
-    email: "",
-  });
+  useEffect(() => {
+    if (admin) {
+      setForm({
+        id: id,
+        password: "",
+        email: admin.email ?? "",
+      });
+    }
+  }, [admin]);
 
   const updateMutate = useCustomNavMutation(
     updateInfoAdmin,
@@ -54,16 +63,6 @@ const UpdateAdmin = () => {
       return;
     }
   };
-
-  useEffect(() => {
-    if (admin) {
-      setForm({
-        id: id,
-        password: "",
-        email: admin.email ?? "",
-      });
-    }
-  }, [admin]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;

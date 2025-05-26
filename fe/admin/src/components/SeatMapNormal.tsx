@@ -12,7 +12,7 @@ const SeatMapNormal = ({
   onSelected?: (seats: SeatType[]) => void;
   initialSeats?: SeatType[];
 }) => {
-  const [seats, setSeats] = useState<SeatType[]>(initialSeats);
+  const [seats, setSeats] = useState<SeatType[]>(initialSeats || []);
 
   const handleSelectedSeat = useCallback((updatedSeat: SeatType) => {
     if (onSelected) {

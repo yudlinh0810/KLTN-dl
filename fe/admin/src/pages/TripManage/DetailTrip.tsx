@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import Loading from "../../components/Loading";
-import { useEffect } from "react";
 import { fetchTrip } from "../../services/trip.service";
 import SeatMapNormal from "../../components/SeatMapNormal";
 import SeatMapSleeper from "../../components/SeatMapSleeper";
@@ -21,8 +20,6 @@ const DetailTrip = () => {
   });
 
   const trip = data?.detailTrip ?? null;
-
-  useEffect(() => {}, [trip]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;

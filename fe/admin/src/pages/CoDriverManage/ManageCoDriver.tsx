@@ -9,7 +9,6 @@ import styles from "../../styles/coDriverManage.module.scss";
 import { ArrangeType } from "../../types/type";
 import DefaultImage from "../../components/DefaultImage";
 import { dateTimeTransform } from "../../utils/transform";
-import { Button, Modal } from 'react-bootstrap';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -24,10 +23,6 @@ const ManageCoDriver: React.FC = () => {
   const urlMain = "/co-driver-manage";
 
   // Khi URL thay đổi, cập nhật currentPage
-  useEffect(() => {
-    const pageNum = page ? Math.max(1, parseInt(page, 10)) - 1 : 0;
-    setCurrentPage(pageNum);
-  }, [location.pathname]);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["coDriverList", currentPage, arrangeType],
@@ -40,6 +35,15 @@ const ManageCoDriver: React.FC = () => {
     staleTime: 5 * 60 * 1000,
     placeholderData: (previousData) => previousData,
   });
+
+  useEffect(() => {
+    const pageNum = page ? Math.max(1, parseInt(page, 10)) - 1 : 0;
+    setCurrentPage(pageNum);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll lên đầu khi chuyển trang
+  }, [data]);
 
   const total = data?.total ?? 0;
   const coDriverData = data?.data || [];
@@ -59,13 +63,8 @@ const ManageCoDriver: React.FC = () => {
     navigate(`${urlMain}/detail/${id}`);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scroll lên đầu khi chuyển trang
-  }, [data]);
-
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;
-
 
   return (
     <div className={styles.container}>
@@ -136,7 +135,6 @@ const ManageCoDriver: React.FC = () => {
                     >
                       Cập nhật
                     </Link>
-                   
                   </div>
                 </td>
               </tr>

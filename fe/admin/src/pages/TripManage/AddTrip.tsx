@@ -34,6 +34,17 @@ const AddTrip = () => {
   const [typeBus, setTypeBus] = useState<TypeBus | null>(null);
   const startTimeRef = useRef<HTMLInputElement | null>(null);
   const endTimeRef = useRef<HTMLInputElement | null>(null);
+  const [form, setForm] = useState<FormType>({
+    tripName: "",
+    carId: 0,
+    driverId: 0,
+    coDrivers: [],
+    departureId: 0,
+    arrivalId: 0,
+    price: 0,
+    startTime: "",
+    endTime: "",
+  });
 
   const {
     data: formAddTripData,
@@ -53,18 +64,6 @@ const AddTrip = () => {
     queryKey: ["locations"],
     queryFn: () => getAllLocation(),
     staleTime: 5 * 60 * 1000,
-  });
-
-  const [form, setForm] = useState<FormType>({
-    tripName: "",
-    carId: 0,
-    driverId: 0,
-    coDrivers: [],
-    departureId: 0,
-    arrivalId: 0,
-    price: 0,
-    startTime: "",
-    endTime: "",
   });
 
   const [seats, setSeats] = useState<SeatType[]>([]);
@@ -93,9 +92,16 @@ const AddTrip = () => {
   };
 
   const handleAddTrip = async () => {
-    if(!form.carId || !form.departureId || !form.driverId || !form.endTime || !form.startTime || !form.price) {
-      toast.error("Bạn nhập thiếu thông tin")
-      return
+    if (
+      !form.carId ||
+      !form.departureId ||
+      !form.driverId ||
+      !form.endTime ||
+      !form.startTime ||
+      !form.price
+    ) {
+      toast.error("Bạn nhập thiếu thông tin");
+      return;
     }
 
     const data = {
@@ -131,7 +137,7 @@ const AddTrip = () => {
 
   const handleSelectedArrival = (selectedArrival: string) => {
     const getId = locationsData?.filter((lo) => lo.name === selectedArrival)[0].id;
-    setForm((prev) => ({ ...prev, arrivalId: getId ? getId : 0  }));
+    setForm((prev) => ({ ...prev, arrivalId: getId ? getId : 0 }));
   };
 
   const handleChangeValueForm = (e: ChangeEvent<HTMLInputElement>) => {
@@ -147,7 +153,9 @@ const AddTrip = () => {
     const getPhone = selectedDriver.split("-")[1].trim();
     setForm((prev) => ({
       ...prev,
-      driverId: formAddTripData?.drivers ? formAddTripData.drivers.filter((dr) => dr.phone === getPhone)[0].id : 0 ,
+      driverId: formAddTripData?.drivers
+        ? formAddTripData.drivers.filter((dr) => dr.phone === getPhone)[0].id
+        : 0,
     }));
   };
 

@@ -16,20 +16,6 @@ const UpdateCoDriver = () => {
   const { id } = useParams<{ id: string }>();
   const idFetch = id ?? "0";
   const dateBirthRef = useRef<HTMLInputElement>(null);
-
-  const { data: coDriverData, isLoading, error } = useQuery({
-    queryKey: ["coDriver", idFetch],
-    queryFn: () => fetchCoDriver(idFetch),
-    staleTime: 5 * 60 * 1000,
-  });
-
-  const { data: locationsData, isLoading: isLocationLoading } = useQuery({
-    queryKey: ["locations"],
-    queryFn: () => getAllLocation(),
-    staleTime: 5 * 60 * 1000,
-  });
-
-
   const [form, setForm] = useState({
     id: id,
     fullName: "",
@@ -40,6 +26,22 @@ const UpdateCoDriver = () => {
     dateBirth: "",
     email: "",
     currentLocationId: 0,
+  });
+
+  const {
+    data: coDriverData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["coDriver", idFetch],
+    queryFn: () => fetchCoDriver(idFetch),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const { data: locationsData, isLoading: isLocationLoading } = useQuery({
+    queryKey: ["locations"],
+    queryFn: () => getAllLocation(),
+    staleTime: 5 * 60 * 1000,
   });
 
   const updateMutate = useCustomNavMutation(
@@ -58,7 +60,7 @@ const UpdateCoDriver = () => {
         sex: coDriverData?.sex ?? "",
         phone: coDriverData?.phone ?? "",
         address: coDriverData?.address ?? "",
-        dateBirth:  coDriverData?.dateBirth?.split("T")[0] ?? "",
+        dateBirth: coDriverData?.dateBirth?.split("T")[0] ?? "",
         email: coDriverData?.email ?? "",
         currentLocationId: coDriverData?.location?.id ?? 0,
       });
@@ -81,16 +83,16 @@ const UpdateCoDriver = () => {
   const handleUpdateCoDriver = async () => {
     const { id, ...data } = form;
 
-    if(!data.currentLocationId || !data.sex || !data.phone || !data.password) {
-      toast.error("Bạn điền thiếu dữ liệu!")
-      return
+    if (!data.currentLocationId || !data.sex || !data.phone || !data.password) {
+      toast.error("Bạn điền thiếu dữ liệu!");
+      return;
     }
 
-     const phoneRegex = /^(0[3|5|7|8|9])[0-9]{8}$/;
-      if(!phoneRegex.test(data.phone)){
-        toast.error("Số điện thoại k đúng định dạng!")
-        return
-      }
+    const phoneRegex = /^(0[3|5|7|8|9])[0-9]{8}$/;
+    if (!phoneRegex.test(data.phone)) {
+      toast.error("Số điện thoại k đúng định dạng!");
+      return;
+    }
 
     if (id) {
       await updateMutate.mutateAsync({ id: Number(id), data });
@@ -108,12 +110,10 @@ const UpdateCoDriver = () => {
   };
 
   const handleSelectedLocation = (selectedArrival: string) => {
-    const getId =locationsData?.filter((lo) => lo.name === selectedArrival)[0].id;
+    const getId = locationsData?.filter((lo) => lo.name === selectedArrival)[0].id;
     setForm((prev) => ({ ...prev, currentLocationId: Number(getId) }));
   };
 
-  
-  console.log('co-driver', coDriverData)
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;
   if (!coDriverData) return <p className={styles.error}>Không tìm thấy thông tin khách hàng</p>;
@@ -189,7 +189,7 @@ const UpdateCoDriver = () => {
                 idHTML="location"
                 titleModal={"Địa điểm"}
                 valueIn={coDriverData.location.name}
-                list={ locationsData?.map((loc) => ({ id: loc.id, value: loc.name })) || []}
+                list={locationsData?.map((loc) => ({ id: loc.id, value: loc.name })) || []}
                 contentPlaceholder="Nhập địa điểm"
                 onSelected={handleSelectedLocation}
                 funcAddItem={addLocation}

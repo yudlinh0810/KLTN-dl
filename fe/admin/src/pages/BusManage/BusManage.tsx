@@ -39,6 +39,10 @@ const BusManage: React.FC = () => {
     placeholderData: (prev) => prev,
   });
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [data]);
+
   const total = data?.total ?? 0;
   const carsData = data?.data || [];
 
@@ -75,10 +79,6 @@ const BusManage: React.FC = () => {
   const toggleArrangeType = () => {
     setArrangeType((prev) => (prev === "asc" ? "desc" : "asc"));
   };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [data]);
 
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;
 
@@ -150,7 +150,7 @@ const BusManage: React.FC = () => {
                 <tr key={index}>
                   <td>{index + 1 + (currentPage - 1) * ITEMS_PER_PAGE}</td>
                   <td>
-                    <DefaultImage src={car.image.urlImg} />
+                    <DefaultImage src={car?.image?.urlImg} />
                   </td>
                   <td>{car.licensePlate}</td>
                   <td>{car.capacity ? `${car.capacity} chỗ` : "N/A"} </td>

@@ -11,7 +11,7 @@ import { getAllTrip } from "../../services/trip.service";
 import formatCurrency from "../../utils/formatCurrency";
 import { debounce } from "../../utils/debounce";
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 5;
 
 const TripManage: React.FC = () => {
   const navigate = useNavigate();
@@ -23,12 +23,6 @@ const TripManage: React.FC = () => {
   );
   const [valueSearch, setValueSearch] = useState<string>("");
   const urlMain = "/trip-manage";
-
-  // Khi URL thay đổi, cập nhật currentPage
-  useEffect(() => {
-    const pageNum = page ? Math.max(1, parseInt(page, 10)) - 1 : 0;
-    setCurrentPage(pageNum);
-  }, [location.pathname]);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["trips", currentPage, arrangeType, valueSearch],
@@ -42,6 +36,16 @@ const TripManage: React.FC = () => {
     staleTime: 5 * 60 * 1000,
     placeholderData: (previousData) => previousData,
   });
+
+  // Khi URL thay đổi, cập nhật currentPage
+  useEffect(() => {
+    const pageNum = page ? Math.max(1, parseInt(page, 10)) - 1 : 0;
+    setCurrentPage(pageNum);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll lên đầu khi chuyển trang
+  }, [data]);
 
   const total = data?.total ?? 0;
   const tripData = data?.data || [];
@@ -65,10 +69,6 @@ const TripManage: React.FC = () => {
   const handleRedirectDetail = (id: number) => {
     navigate(`${urlMain}/detail/${id}`);
   };
-
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scroll lên đầu khi chuyển trang
-  }, [data]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;

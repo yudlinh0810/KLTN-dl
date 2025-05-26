@@ -10,7 +10,7 @@ const SeatMapSleeper = ({
   initialSeats: SeatType[];
   onSelected?: (seats: SeatType[]) => void;
 }) => {
-  const [seats, setSeats] = useState<SeatType[]>(initialSeats);
+  const [seats, setSeats] = useState<SeatType[]>(initialSeats || []);
 
   useEffect(() => {
     if (onSelected) {

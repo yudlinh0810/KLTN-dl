@@ -4,7 +4,6 @@ import { dateTimeTransform } from "../../utils/transform";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import Loading from "../../components/Loading";
-import { useEffect } from "react";
 import { fetchAdmin } from "../../services/admin.service";
 
 const DetailAdmin = () => {
@@ -18,8 +17,6 @@ const DetailAdmin = () => {
   });
 
   const admin = data ?? null;
-
-  useEffect(() => {}, [admin]);
 
   if (isLoading) return <Loading />;
   if (error) return <p className={styles.error}>Lỗi khi tải dữ liệu</p>;

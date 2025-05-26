@@ -33,6 +33,8 @@ const AddBus = () => {
     "Thêm xe thất bại"
   );
 
+  useEffect(() => {}, [images]);
+
   const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
@@ -44,15 +46,14 @@ const AddBus = () => {
   };
 
   const handleAddBus = async () => {
-    
-    if(!form.capacity || !form.licensePlate) {
-      toast.error("Bạn nhập thiếu dữ liệu")
-      return
+    if (!form.capacity || !form.licensePlate) {
+      toast.error("Bạn nhập thiếu dữ liệu");
+      return;
     }
     const regex = /^[0-9]{2}[A-Z]-[0-9]{4,5}$/i;
-    if(regex.test(form?.licensePlate) === false) {
-      toast.error("Biển số xe không đúng định dạng")
-      return
+    if (regex.test(form?.licensePlate) === false) {
+      toast.error("Biển số xe không đúng định dạng");
+      return;
     }
 
     const formData = new FormData();
@@ -71,8 +72,6 @@ const AddBus = () => {
 
     mutateUpdate.mutate(formData);
   };
-
-  useEffect(() => {}, [images]);
 
   return (
     <div className={styles.container}>
@@ -139,7 +138,7 @@ const AddBus = () => {
               <InputDropDownListCD
                 idHTML="location"
                 titleModal={"Địa điểm"}
-                list={locationsData?.map((loc) => ({ id: loc.id, value: loc.name }))  || []}
+                list={locationsData?.map((loc) => ({ id: loc.id, value: loc.name })) || []}
                 contentPlaceholder="Nhập địa điểm"
                 onSelected={handleSelectedLocation}
                 funcAddItem={addLocation}
