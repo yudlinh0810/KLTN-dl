@@ -200,7 +200,7 @@ const Header = () => {
           <button className={styled["side-bar-mobile__closed-btn"]} onClick={handleToggleSideBar}>
             X
           </button>
-          <span className={styled["side-bar-mobile__logo"]}>YudLinhBus</span>
+          <span className={styled["side-bar-mobile__logo"]}>VeXeTienIch</span>
         </div>
         <nav className={styled["side-bar-mobile__menu"]}>
           <ul className={styled.list}>
