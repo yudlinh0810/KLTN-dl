@@ -58,7 +58,7 @@ const HistoryBookTicket = () => {
     <div className={styles.container}>
       {dataTicket && dataTicket.length > 0 ? (
         <div className={styles.content}>
-          <h2>Lịch sử đặt vé</h2>
+          <h2>Lịch sử đặt vé:</h2>
           <div className={styles.data}>
             <table>
               <thead>
