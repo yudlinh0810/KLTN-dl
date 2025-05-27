@@ -2,7 +2,7 @@ import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "react-toastify";
 import CustomModal from "../components/CustomModal";
 import Loading from "../components/Loading";
@@ -38,6 +38,7 @@ export interface FormDataTicket {
 }
 
 const BookedPage = () => {
+  const navigate = useNavigate();
   const [searchTripParams] = useSearchParams();
   const { user } = useUserStore();
   const [querySearchTrip, setQuerySearchTrip] = useState<ParamsSearchDetailTrip>(defaultQuery);
@@ -156,6 +157,10 @@ const BookedPage = () => {
   };
 
   const handlePayment = async () => {
+    if (user?.email === "") {
+      toast.warning("Bạn chưa đăng nhập");
+      navigate("/login");
+    }
     if ((formDataTicket?.seats?.length ?? 0) <= 0) {
       toast.warning("Bạn chưa chọn bất kỳ ghế nào");
       return;
